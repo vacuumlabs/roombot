@@ -1,0 +1,9 @@
+{
+  "extends": "vacuumlabs",
+  "env": {
+    "browser": true,
+    "node": true
+  },
+  "rules": {
+  }
+}

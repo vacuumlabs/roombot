@@ -1,0 +1,29 @@
+{
+  "name": "roombot",
+  "version": "1.0.0",
+  "description": "App for retrieving VacuumLabs rooms availability info",
+  "engines": {
+    "node": "10.15.0"
+  },
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
+  "dependencies": {
+    "@slack/client": "^4.12.0",
+    "cookie-parser": "~1.4.3",
+    "dotenv": "^7.0.0",
+    "express": "~4.16.0",
+    "googleapis": "^39.0.0",
+    "http-errors": "~1.6.2"
+  },
+  "devDependencies": {
+    "babel-eslint": "^10.0.1",
+    "eslint": "^5.15.3",
+    "eslint-config-vacuumlabs": "^1.8.2",
+    "eslint-plugin-import": "^2.16.0",
+    "eslint-plugin-react": "^7.12.4",
+    "nodemon": "^1.18.10"
+  }
+}
