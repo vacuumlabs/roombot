@@ -8,7 +8,7 @@ router.get('/rooms/raw', async (req, res) => {
   res.send(await getRoomsInfoRaw())
 })
 router.post('/rooms', async (req, res) => {
-  const office = req.body.text.trim().toUpperCace()
+  const office = req.body.text.trim().toUpperCase()
   res.status(200).send(await printRoomsInfo(office))
 })
 
