@@ -41,15 +41,20 @@ const getAttachmentFields = (roomInfo) => {
 }
 
 const getFormatedAttachement = (roomInfo) => {
+
+  const availableFor = roomInfo.nextEventStarts
+    ? ` for ${getDurationString(
+      roomInfo.nextEventStarts,
+      roomInfo.currentTimestamp,
+    )}`
+    : undefined
+
   return {
     fallback: roomInfo.roomName,
     color: roomInfo.available ? 'good' : 'danger',
     title: roomInfo.roomName,
     text: roomInfo.available
-      ? `Available for ${getDurationString(
-        roomInfo.nextEventStarts,
-        roomInfo.currentTimestamp,
-      )}`
+      ? `Available${availableFor}}`
       : `Unavailable    available in ${getDurationString(
         roomInfo.currentTimestamp,
         roomInfo.eventEnds,
