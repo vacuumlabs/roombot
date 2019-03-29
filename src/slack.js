@@ -5,7 +5,7 @@ const moment = require('moment-timezone')
 const getAttachmentFields = (roomInfo) => {
   const fields = []
 
-  if (roomInfo.available && roomInfo.nextEventStarts) {
+  if (roomInfo.nextEventStarts) {
     fields.push({
       title: 'Next event',
       value: moment(roomInfo.nextEventStarts)
@@ -15,7 +15,7 @@ const getAttachmentFields = (roomInfo) => {
     })
   }
 
-  if (!roomInfo.available) {
+  if (roomInfo.eventEnds) {
     fields.push({
       title: 'Event ends',
       value: moment(roomInfo.eventEnds)
