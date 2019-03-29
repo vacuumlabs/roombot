@@ -7,7 +7,7 @@ const getDurationString = (from, to) => {
   const now = DateTime.fromMillis(from)
   const availableIn = eventEnds.diff(now, ['hours', 'minutes']).toObject()
   const hString = availableIn.hours > 0 ? `${availableIn.hours}h` : undefined
-  const mString = `${availableIn.minutes}m`
+  const mString = `${Math.floor(availableIn.minutes)}m`
 
   return `${hString} ${mString}`
 }
