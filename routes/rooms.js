@@ -7,7 +7,7 @@ const router = express.Router()
 router.get('/rooms/raw', async (req, res) => {
   res.send(await getRoomsInfoRaw())
 })
-router.get('/rooms', (req, res) => {
+router.post('/rooms', (req, res) => {
   printRoomsInfo()
 })
 
