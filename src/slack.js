@@ -11,7 +11,7 @@ const getAttachmentFields = (roomInfo) => {
       value: moment(roomInfo.eventEnds)
         .tz(roomInfo.timeZone)
         .format('HH:mm'),
-      short: false,
+      short: true,
     })
   }
 
@@ -21,11 +21,10 @@ const getAttachmentFields = (roomInfo) => {
       value: moment(roomInfo.nextEventStarts)
         .tz(roomInfo.timeZone)
         .format('HH:mm'),
-      short: false,
+      short: true,
     })
   }
 
-  console.log(fields)
   return fields
 }
 
