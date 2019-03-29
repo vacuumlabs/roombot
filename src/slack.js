@@ -3,8 +3,8 @@ const {isEmpty} = require('lodash')
 const {DateTime} = require('luxon')
 
 const getDurationString = (from, to) => {
-  const eventEnds = DateTime.locale(to)
-  const now = DateTime.locale(from)
+  const eventEnds = DateTime.local(to)
+  const now = DateTime.local(from)
   const availableIn = eventEnds.diff(now, ['hours', 'minutes']).toObject()
   const hString = availableIn.hours > 0 ? `${availableIn.hours}h` : undefined
   const mString = `${availableIn.minutes}m`
@@ -25,7 +25,7 @@ const getAttachmentFields = (roomInfo) => {
 
     fields.push({
       title: 'Event ends',
-      value: DateTime.locale(roomInfo.eventEnds)
+      value: DateTime.local(roomInfo.eventEnds)
         .setZone(roomInfo.timeZone)
         .toLocaleString(DateTime.TIME_24_SIMPLE),
       short: true,
@@ -35,7 +35,7 @@ const getAttachmentFields = (roomInfo) => {
   if (roomInfo.nextEventStarts) {
     fields.push({
       title: 'Next event',
-      value: DateTime.locale(roomInfo.nextEventStarts)
+      value: DateTime.local(roomInfo.nextEventStarts)
         .setZone(roomInfo.timeZone)
         .toLocaleString(DateTime.TIME_24_SIMPLE),
       short: true,
