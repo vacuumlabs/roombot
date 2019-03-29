@@ -9,7 +9,7 @@ const getDurationString = (from, to) => {
   const hString = availableIn.hours > 0 ? `${availableIn.hours}h` : undefined
   const mString = `${Math.floor(availableIn.minutes)}m`
 
-  return `${hString} ${mString}`
+  return `${hString || ''} ${mString || ''}`
 }
 
 const getAttachmentFields = (roomInfo) => {
