@@ -5,7 +5,7 @@ const {printRoomsInfo} = require('../src/slack')
 const router = express.Router()
 
 router.get('/rooms/raw', async (req, res) => {
-  res.send(await getRoomsInfoRaw())
+  res.send(await getRoomsInfoRaw('BA'))
 })
 router.post('/rooms', async (req, res) => {
   const office = req.body.text.trim().toUpperCase()
