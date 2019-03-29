@@ -18,7 +18,7 @@ const printRoomsInfo = async () => {
     attachments: Object.keys(roomsInfo).map((key) => {
       return {
         fallback: roomsInfo[key].roomName,
-        color: 'warning',
+        color: roomsInfo[key].available ? 'good' : 'danger',
         title: roomsInfo[key].roomName,
         text: roomsInfo[key].available ? 'Available' : 'Unavailable',
       }
