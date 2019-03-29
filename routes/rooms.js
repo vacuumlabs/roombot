@@ -8,7 +8,8 @@ router.get('/rooms/raw', async (req, res) => {
   res.send(await getRoomsInfoRaw())
 })
 router.post('/rooms', async (req, res) => {
-  res.status(200).send(await printRoomsInfo())
+  const office = req.query.text.trim()
+  res.status(200).send(office)
 })
 
 module.exports = router
