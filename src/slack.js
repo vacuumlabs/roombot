@@ -1,16 +1,33 @@
 const {getRoomsInfoRaw} = require('./google')
 const {isEmpty} = require('lodash')
-const moment = require('moment-timezone')
+const {DateTime} = require('luxon')
+
+const getDurationString = (from, to) => {
+  const eventEnds = DateTime.locale(to)
+  const now = DateTime.locale(from)
+  const availableIn = eventEnds.diff(now, ['hours', 'minutes']).toObject()
+  const hString = availableIn.hours > 0 ? `${availableIn.hours}h` : undefined
+  const mString = `${availableIn.minutes}m`
+
+  return `${hString} ${mString}`
+}
 
 const getAttachmentFields = (roomInfo) => {
   const fields = []
 
   if (roomInfo.eventEnds) {
+
+    fields.push({
+      title: 'Available in',
+      value: getDurationString(roomInfo.currentTimestamp, roomInfo.eventEnds),
+      short: true,
+    })
+
     fields.push({
       title: 'Event ends',
-      value: moment(roomInfo.eventEnds)
-        .tz(roomInfo.timeZone)
-        .format('HH:mm'),
+      value: DateTime.locale(roomInfo.eventEnds)
+        .setZone(roomInfo.timeZone)
+        .toLocaleString(DateTime.TIME_24_SIMPLE),
       short: true,
     })
   }
@@ -18,9 +35,9 @@ const getAttachmentFields = (roomInfo) => {
   if (roomInfo.nextEventStarts) {
     fields.push({
       title: 'Next event',
-      value: moment(roomInfo.nextEventStarts)
-        .tz(roomInfo.timeZone)
-        .format('HH:mm'),
+      value: DateTime.locale(roomInfo.nextEventStarts)
+        .setZone(roomInfo.timeZone)
+        .toLocaleString(DateTime.TIME_24_SIMPLE),
       short: true,
     })
   }
