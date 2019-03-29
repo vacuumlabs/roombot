@@ -26,6 +26,8 @@ const getAttachmentFields = (roomInfo) => {
       short: false,
     })
   }
+
+  return fields
 }
 
 const getFormatedAttachement = (roomInfo) => {
