@@ -113,7 +113,7 @@ const getRoomInfo = (calendar) => {
   })
 
   const available = getRoomAvailability(eventTimes, currentTimestamp)
-  const eventEnds = available
+  const eventEnds = !available
     ? getCurrentEventEnd(
       eventTimes,
       currentTimestamp,
