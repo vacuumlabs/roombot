@@ -1,6 +1,6 @@
 const {getRoomsInfoRaw} = require('./google')
 const {isEmpty} = require('lodash')
-const moment = require('moment')
+const moment = require('moment-timezone')
 
 const getAttachmentFields = (roomInfo) => {
   const fields = []
