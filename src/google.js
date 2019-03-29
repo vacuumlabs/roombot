@@ -81,18 +81,10 @@ const getRoomAvailability = (eventTimes, currentTimestamp) => {
 const getCurrentEventEnd = (
   eventTimes,
   currentTimestamp,
-  timeZone,
-  available
 ) => {
-  if (available) {
-    return undefined
-  }
-
   for (const event of eventTimes) {
     if (currentTimestamp >= event.start && currentTimestamp < event.end) {
-      return new Date(event.end).toLocaleString('en-US', {
-        timeZone,
-      })
+      return event.end
     }
   }
   return undefined
@@ -101,18 +93,10 @@ const getCurrentEventEnd = (
 const getNextEventStart = (
   eventTimes,
   currentTimestamp,
-  timeZone,
-  available
 ) => {
-  if (!available) {
-    return undefined
-  }
-
   for (const event of eventTimes) {
     if (currentTimestamp <= event.start) {
-      return new Date(event.start).toLocaleString('en-US', {
-        timeZone,
-      })
+      return event.start
     }
   }
   return undefined
@@ -129,17 +113,16 @@ const getRoomInfo = (calendar) => {
   })
 
   const available = getRoomAvailability(eventTimes, currentTimestamp)
-  const eventEnds = getCurrentEventEnd(
-    eventTimes,
-    currentTimestamp,
-    calendar.timeZone,
-    available,
-  )
+  const eventEnds = available
+    ? getCurrentEventEnd(
+      eventTimes,
+      currentTimestamp,
+    )
+    : undefined
+
   const nextEventStarts = getNextEventStart(
     eventTimes,
     currentTimestamp,
-    calendar.timeZone,
-    available,
   )
 
   return {
@@ -148,6 +131,7 @@ const getRoomInfo = (calendar) => {
     eventEnds,
     nextEventStarts,
     timeZone: calendar.timeZone,
+    currentTimestamp,
   }
 }
 
