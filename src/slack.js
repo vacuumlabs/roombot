@@ -17,14 +17,9 @@ const getAttachmentFields = (roomInfo) => {
 
   if (roomInfo.eventEnds) {
 
-    console.log(roomInfo.eventEnds)
-    console.log(DateTime.local(roomInfo.eventEnds)
-    .setZone(roomInfo.timeZone)
-    .toLocaleString(DateTime.TIME_24_SIMPLE))
-
     fields.push({
       title: 'Event ends',
-      value: DateTime.local(roomInfo.eventEnds)
+      value: DateTime.fromMillis(roomInfo.eventEnds)
         .setZone(roomInfo.timeZone)
         .toLocaleString(DateTime.TIME_24_SIMPLE),
       short: true,
@@ -34,7 +29,7 @@ const getAttachmentFields = (roomInfo) => {
   if (roomInfo.nextEventStarts) {
     fields.push({
       title: 'Next event',
-      value: DateTime.local(roomInfo.nextEventStarts)
+      value: DateTime.fromMillis(roomInfo.nextEventStarts)
         .setZone(roomInfo.timeZone)
         .toLocaleString(DateTime.TIME_24_SIMPLE),
       short: true,
