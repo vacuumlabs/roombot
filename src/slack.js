@@ -53,7 +53,7 @@ const getFormatedAttachement = (roomInfo) => {
     color: roomInfo.available ? 'good' : 'danger',
     title: roomInfo.roomName,
     text: roomInfo.available
-      ? `Available${availableFor}}`
+      ? `Available${availableFor || ''}`
       : `Unavailable    available in ${getDurationString(
         roomInfo.currentTimestamp,
         roomInfo.eventEnds,
