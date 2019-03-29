@@ -24,7 +24,7 @@ const getAttachmentFields = (roomInfo) => {
       short: false,
     })
   }
-
+  console.log(fields)
   return fields
 }
 
