@@ -1,6 +1,6 @@
 const {getRoomsInfoRaw} = require('./google')
 const {isEmpty} = require('lodash')
-const {DateTime} = require('luxon')
+const moment = require('moment')
 
 const getAttachmentFields = (roomInfo) => {
   const fields = []
@@ -8,10 +8,9 @@ const getAttachmentFields = (roomInfo) => {
   if (roomInfo.available && roomInfo.nextEventStarts) {
     fields.push({
       title: 'Next event',
-      value: DateTime
-        .local(roomInfo.nextEventStarts)
-        .setZone(roomInfo.timeZone)
-        .toLocaleString(DateTime.TIME_24_SIMPLE),
+      value: moment(roomInfo.nextEventStarts)
+        .tz(roomInfo.timeZone)
+        .format('HH:mm'),
       short: false,
     })
   }
@@ -19,10 +18,9 @@ const getAttachmentFields = (roomInfo) => {
   if (!roomInfo.available) {
     fields.push({
       title: 'Event ends',
-      value: DateTime
-        .local(roomInfo.eventEnds)
-        .setZone(roomInfo.timeZone)
-        .toLocaleString(DateTime.TIME_24_SIMPLE),
+      value: moment(roomInfo.eventEnds)
+        .tz(roomInfo.timeZone)
+        .format('HH:mm'),
       short: false,
     })
   }
