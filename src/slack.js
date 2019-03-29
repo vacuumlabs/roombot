@@ -3,6 +3,7 @@ const {isEmpty} = require('lodash')
 const {DateTime} = require('luxon')
 
 const getDurationString = (from, to) => {
+  console.log(from, to)
   const eventEnds = DateTime.fromMillis(to)
   const now = DateTime.fromMillis(from)
   const availableIn = eventEnds.diff(now, ['hours', 'minutes']).toObject()
@@ -47,11 +48,11 @@ const getFormatedAttachement = (roomInfo) => {
     text: roomInfo.available
       ? `Available for ${getDurationString(
         roomInfo.nextEventStarts,
-        roomInfo.currentTimestamp
+        roomInfo.currentTimestamp,
       )}`
       : `Unavailable    available in ${getDurationString(
         roomInfo.currentTimestamp,
-        roomInfo.eventEnds
+        roomInfo.eventEnds,
       )}`,
     fields: getAttachmentFields(roomInfo),
   }
