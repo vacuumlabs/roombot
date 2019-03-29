@@ -8,7 +8,7 @@ router.get('/rooms/raw', async (req, res) => {
   res.send(await getRoomsInfoRaw())
 })
 router.post('/rooms', (req, res) => {
-  printRoomsInfo()
+  res.status(200).send(printRoomsInfo())
 })
 
 module.exports = router
