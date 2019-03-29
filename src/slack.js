@@ -17,11 +17,10 @@ const getAttachmentFields = (roomInfo) => {
 
   if (roomInfo.eventEnds) {
 
-    fields.push({
-      title: 'Available in',
-      value: getDurationString(roomInfo.currentTimestamp, roomInfo.eventEnds),
-      short: true,
-    })
+    console.log(roomInfo.eventEnds)
+    console.log(DateTime.local(roomInfo.eventEnds)
+    .setZone(roomInfo.timeZone)
+    .toLocaleString(DateTime.TIME_24_SIMPLE))
 
     fields.push({
       title: 'Event ends',
