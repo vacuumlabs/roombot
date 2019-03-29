@@ -39,7 +39,7 @@ const getRefreshToken = async (code) => {
   return tokens.refresh_token
 }
 
-const getCalendars = async () => {
+const getCalendars = async (office) => {
   oauth2Client.setCredentials({
     refresh_token: process.env.GOOGLE_OAUTH_REFRESH_TOKEN,
   })
@@ -51,7 +51,7 @@ const getCalendars = async () => {
   const timeMin = new Date()
 
   const calendars = {}
-  for (const key in CALENDARS) {
+  for (const key in CALENDARS[office]) {
     const res = await calendar.events.list({
       calendarId: CALENDARS[key].googleId,
       alwaysIncludeEmail: false,
@@ -120,15 +120,8 @@ const getNextEventStart = (
 
 const getRoomInfo = (calendar) => {
   const currentTimestamp = new Date().getTime()
-  //console.log(new Date().getTimezoneOffset())
 
   const eventTimes = calendar.items.map((event) => {
-    /*
-    console.log({
-      start: new Date(event.start.dateTime),
-      end: new Date(event.end.dateTime),
-    })
-    */
     return {
       start: new Date(event.start.dateTime).getTime(),
       end: new Date(event.end.dateTime).getTime(),
@@ -140,13 +133,13 @@ const getRoomInfo = (calendar) => {
     eventTimes,
     currentTimestamp,
     calendar.timeZone,
-    available
+    available,
   )
   const nextEventStarts = getNextEventStart(
     eventTimes,
     currentTimestamp,
     calendar.timeZone,
-    available
+    available,
   )
 
   return {
@@ -158,8 +151,8 @@ const getRoomInfo = (calendar) => {
   }
 }
 
-const getRoomsInfoRaw = async () => {
-  const calendars = await getCalendars()
+const getRoomsInfoRaw = async (office) => {
+  const calendars = await getCalendars(office)
   const resultMap = {}
   for (const key in calendars) {
     resultMap[key] = getRoomInfo(calendars[key])
