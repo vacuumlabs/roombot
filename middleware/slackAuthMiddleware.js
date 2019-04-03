@@ -9,17 +9,17 @@ function authenticateRequest(req, res, next) {
   const sigBasestring = `v0:${timestamp}:${requestBody}`
 
   if (!timestamp || !slackSignature) {
-    res.status(400).send('Invalid request.')
+    res.status(400).send({error: 'Invalid request'})
   }
 
   // Prevents replay attack
   const time = Math.floor(new Date().getTime() / 1000)
   if (Math.abs(time - timestamp) > 300) {
-    res.status(400).send('Invalid request.')
+    res.status(400).send({error: 'Invalid request'})
   }
 
   if (!SLACK_SIGNING_SECRET) {
-    res.status(400).send('Slack signing secret is empty.')
+    res.status(400).send({error: 'Slack signing secret is empty'})
   }
 
   const mySignature = `v0=${
@@ -33,7 +33,7 @@ function authenticateRequest(req, res, next) {
   ) {
     next()
   } else {
-    res.status(400).send('Verification failed')
+    res.status(400).send({error: 'Verification failed'})
   }
 }
 

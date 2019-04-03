@@ -72,4 +72,12 @@ function onListening() {
     : `port ${addr.port}`
   // eslint-disable-next-line no-console
   console.log(`Listening on ${bind}`)
+  keepMeAwake()
+}
+
+function keepMeAwake() {
+  setInterval(() => {
+    http.get('https://roombot-vacuumlabs.herokuapp.com')
+    console.log('PING')
+  }, 600000)
 }
