@@ -79,13 +79,13 @@ const printRoomsInfo = async (office) => {
         type: 'section',
         text: 'The rooms availability info: ',
         attachments,
-      }//, {
-      //  type: 'section',
-      //  text: {
-       //   type: 'mrkdwn',
-       //   text: '<https://calendar.google.com/calendar/r|Book a room>',
-      //  },
-    //  },
+      }, {
+        type: 'section',
+        text: {
+          type: 'mrkdwn',
+          text: '<https://calendar.google.com/calendar/r|Book a room>',
+        },
+      },
     ],
   }
 
