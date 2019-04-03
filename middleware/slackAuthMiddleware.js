@@ -3,7 +3,7 @@ const qs = require('qs')
 const {SLACK_SIGNING_SECRET} = process.env
 
 function authenticateRequest(req, res, next) {
-  const timestamp = req.headers['X-Slack-Request-Timestamp']
+  const timestamp = req.headers['x-slack-request-timestamp']
   console.log(req.headers)
 
   // Prevents replay attack
@@ -18,7 +18,7 @@ function authenticateRequest(req, res, next) {
 
   const requestBody = qs.stringify(req.body, {format: 'RFC1738'})
   const sigBasestring = `v0:${timestamp}:${requestBody}`
-  const slackSignature = req.headers['X-Slack-Signature']
+  const slackSignature = req.headers['x-slack-signature']
   console.log(sigBasestring)
 
   const mySignature = `v0=${
