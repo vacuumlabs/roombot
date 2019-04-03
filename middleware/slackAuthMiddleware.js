@@ -15,7 +15,7 @@ function authenticateRequest(req, res, next) {
   // Prevents replay attack
   const time = Math.floor(new Date().getTime() / 1000)
   if (Math.abs(time - timestamp) > 300) {
-    res.status(400).send('Ignore this request.')
+    res.status(400).send('Invalid request.')
   }
 
   if (!SLACK_SIGNING_SECRET) {
