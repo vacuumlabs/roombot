@@ -2,14 +2,13 @@
   "name": "roombot",
   "version": "1.0.0",
   "description": "App for retrieving VacuumLabs rooms availability info",
-  "engines": {
-    "node": "10.15.0"
-  },
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon index.js"
   },
+  "author": "Filip Konig",
+  "license": "ISC",
   "dependencies": {
     "axios": "^0.18.0",
     "cookie-parser": "~1.4.3",
