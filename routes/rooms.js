@@ -18,6 +18,9 @@ router.post('/rooms', async (req, res) => {
 
   const responseData = await printRoomsInfo(office)
   axios.post(delayedResponeUrl, responseData)
+    .catch((error) => {
+      console.log(error)
+    })
 })
 
 module.exports = router

@@ -88,7 +88,7 @@ const printRoomsInfo = async (office) => {
       },
     ],
   }
-
+  console.log(formatedOutput)
   return formatedOutput
 }
 
