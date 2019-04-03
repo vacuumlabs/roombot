@@ -78,7 +78,6 @@ const printRoomsInfo = async (office) => {
       {
         type: 'section',
         text: 'The rooms availability info: ',
-        attachments,
       }, {
         type: 'section',
         text: {
@@ -87,6 +86,7 @@ const printRoomsInfo = async (office) => {
         },
       },
     ],
+    attachments,
   }
 
   return formatedOutput
