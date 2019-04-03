@@ -74,18 +74,8 @@ const printRoomsInfo = async (office) => {
     : Object.keys(roomsInfo).map((key) => getFormatedAttachement(roomsInfo[key]))
 
   const formatedOutput = {
-    blocks: [
-      {
-        type: 'section',
-        text: 'The rooms availability info: ',
-      }, {
-        type: 'section',
-        text: {
-          type: 'mrkdwn',
-          text: '<https://calendar.google.com/calendar/r|Book a room>',
-        },
-      },
-    ],
+    type: 'section',
+    text: 'The rooms availability info: ',
     attachments,
   }
 
