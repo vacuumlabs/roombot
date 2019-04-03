@@ -1,7 +1,6 @@
 require('dotenv').config()
 const app = require('./app')
 const http = require('http')
-const axios = require('axios')
 
 
 const port = normalizePort(process.env.PORT || '3000')
@@ -78,6 +77,6 @@ function onListening() {
 
 function keepMeAwake() {
   setInterval(() => {
-    axios.get('https://roombot-vacuumlabs.herokuapp.com')
+    http.get('https://roombot-vacuumlabs.herokuapp.com')
   }, 600000)
 }
