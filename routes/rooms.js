@@ -13,27 +13,11 @@ router.get('/rooms/raw', async (req, res) => {
 })
 router.post('/rooms', async (req, res) => {
   const office = req.body.text.trim().toUpperCase()
-  //const delayedResponeUrl = req.body.response_url
-  res.status(200).send([
-    {
-      "type": "section",
-      "text": {
-        "text": "*Sally* has requested you set the deadline for the Nano launch project",
-        "type": "mrkdwn"
-      },
-      "accessory": {
-        "type": "datepicker"
-      }
-    }
-  ])
-  /*
+  const delayedResponeUrl = req.body.response_url
+  res.status(200).send()
+
   const responseData = await printRoomsInfo(office)
-  axios({
-    method: 'post',
-    url: delayedResponeUrl,
-    data: JSON.stringify(responseData),
-  })
-  */
+  axios.post(delayedResponeUrl, responseData)
 })
 
 module.exports = router
