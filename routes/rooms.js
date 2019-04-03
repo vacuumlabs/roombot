@@ -20,7 +20,7 @@ router.post('/rooms', async (req, res) => {
   axios({
     method: 'post',
     url: delayedResponeUrl,
-    data: responseData,
+    data: JSON.stringify(responseData),
   })
 })
 
