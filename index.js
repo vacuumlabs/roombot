@@ -72,7 +72,7 @@ function onListening() {
     : `port ${addr.port}`
   // eslint-disable-next-line no-console
   console.log(`Listening on ${bind}`)
-  keepMeAwake()
+  //keepMeAwake()
 }
 
 function keepMeAwake() {
