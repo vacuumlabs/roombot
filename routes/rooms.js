@@ -6,7 +6,7 @@ const authenticateRequest = require('../middleware/slackAuthMiddleware')
 
 const router = express.Router()
 
-router.use(authenticateRequest)
+//router.use(authenticateRequest)
 
 router.get('/rooms/raw', async (req, res) => {
   res.send(await getRoomsInfoRaw('BA'))
