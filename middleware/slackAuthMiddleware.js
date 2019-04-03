@@ -4,7 +4,13 @@ const {SLACK_SIGNING_SECRET} = process.env
 
 function authenticateRequest(req, res, next) {
   const timestamp = req.headers['x-slack-request-timestamp']
-  console.log(req.headers)
+  const slackSignature = req.headers['x-slack-signature']
+  const requestBody = qs.stringify(req.body, {format: 'RFC1738'})
+  const sigBasestring = `v0:${timestamp}:${requestBody}`
+
+  if (!timestamp || !slackSignature) {
+    res.status(400).send('Invalid request.')
+  }
 
   // Prevents replay attack
   const time = Math.floor(new Date().getTime() / 1000)
@@ -15,11 +21,6 @@ function authenticateRequest(req, res, next) {
   if (!SLACK_SIGNING_SECRET) {
     res.status(400).send('Slack signing secret is empty.')
   }
-
-  const requestBody = qs.stringify(req.body, {format: 'RFC1738'})
-  const sigBasestring = `v0:${timestamp}:${requestBody}`
-  const slackSignature = req.headers['x-slack-signature']
-  console.log(sigBasestring)
 
   const mySignature = `v0=${
     crypto.createHmac('sha256', SLACK_SIGNING_SECRET)
