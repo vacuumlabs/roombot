@@ -4,6 +4,7 @@ const {SLACK_SIGNING_SECRET} = process.env
 
 function authenticateRequest(req, res, next) {
   const timestamp = req.headers['X-Slack-Request-Timestamp']
+  console.log(req.headers)
 
   // Prevents replay attack
   const time = Math.floor(new Date().getTime() / 1000)
