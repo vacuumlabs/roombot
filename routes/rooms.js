@@ -13,15 +13,16 @@ router.get('/rooms/raw', async (req, res) => {
 })
 router.post('/rooms', async (req, res) => {
   const office = req.body.text.trim().toUpperCase()
-  const delayedResponeUrl = req.body.response_url
-  res.status(200).send()
-
+  //const delayedResponeUrl = req.body.response_url
+  res.status(200).send(await printRoomsInfo(office))
+  /*
   const responseData = await printRoomsInfo(office)
   axios({
     method: 'post',
     url: delayedResponeUrl,
     data: JSON.stringify(responseData),
   })
+  */
 })
 
 module.exports = router
