@@ -1,12 +1,12 @@
 {
     "version": 2,
     "name": "roombot",
-    "alias": "roombot.vacuumlabs",
+    "alias": "roombot-vacuumlabs.now.sh",
     "builds": [
-        { "src": "*.js", "use": "@now/node" }
+        { "src": "app.js", "use": "@now/node" }
     ],
     "routes": [
-        { "src": "/rooms", "methods": ["POST"], "dest": "index.js" }
+        { "src": "/(.*)", "dest": "app.js" }
       ],
     "env": {
         "GOOGLE_OAUTH_REFRESH_TOKEN": "@google-refresh-token",
