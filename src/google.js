@@ -67,18 +67,22 @@ const getCalendars = async (office) => {
   const calendars = {}
   for (const key in CALENDARS[office]) {
     console.log(key)
-    const res = await calendar.events.list({
-      calendarId: CALENDARS[office][key].googleId,
-      alwaysIncludeEmail: false,
-      maxAttendees: 1,
-      maxResults: 2,
-      orderBy: 'startTime',
-      singleEvents: true,
-      timeMax: timeMax.toISOString(),
-      timeMin: timeMin.toISOString(),
-      fields: 'timeZone , summary, items',
-    })
-    calendars[key] = res.data
+    try {
+      const res = await calendar.events.list({
+        calendarId: CALENDARS[office][key].googleId,
+        alwaysIncludeEmail: false,
+        maxAttendees: 1,
+        maxResults: 2,
+        orderBy: 'startTime',
+        singleEvents: true,
+        timeMax: timeMax.toISOString(),
+        timeMin: timeMin.toISOString(),
+        fields: 'timeZone , summary, items',
+      })
+      calendars[key] = res.data
+    } catch (err) {
+      console.log(err)
+    }
   }
   console.log(calendars)
   return calendars
