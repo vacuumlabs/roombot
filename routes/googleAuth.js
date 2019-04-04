@@ -13,7 +13,7 @@ router.get('/recievecode', async (req, res) => {
 })
 */
 router.get('/test', async (req, res) => {
-  res.send(await getRoomsInfoRaw())
+  res.send(await getRoomsInfoRaw('BA'))
 })
 
 module.exports = router
