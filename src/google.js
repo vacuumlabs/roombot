@@ -66,6 +66,7 @@ const getCalendars = async (office) => {
 
   const calendars = {}
   for (const key in CALENDARS[office]) {
+    console.log('Calendar')
     const res = await calendar.events.list({
       calendarId: CALENDARS[office][key].googleId,
       alwaysIncludeEmail: false,
@@ -79,7 +80,7 @@ const getCalendars = async (office) => {
     })
     calendars[key] = res.data
   }
-
+  console.log(calendars)
   return calendars
 }
 
