@@ -1,6 +1,19 @@
 const {google} = require('googleapis')
 const {CALENDARS} = require('./constants')
+const privatekey = require('../private_key.json')
 
+//const serviceAccount = () => {
+  // configure a JWT auth client
+  const jwtClient = new google.auth.JWT(
+    privatekey.client_email,
+    null,
+    privatekey.private_key,
+    ['https://www.googleapis.com/auth/calendar.events.readonly'],
+  )
+  //authenticate request
+  //return jwtClient.authorize()
+//}
+/*
 const {
   GOOGLE_CLIENT_ID,
   GOOGLE_CLIEN_SECRET,
@@ -14,15 +27,15 @@ const oauth2Client = new google.auth.OAuth2(
 )
 
 const scopes = ['https://www.googleapis.com/auth/calendar.events.readonly']
-
+*/
 const calendar = google.calendar({
   version: 'v3',
 })
 
 google.options({
-  auth: oauth2Client,
+  auth: jwtClient,
 })
-
+/*
 const authorize = () => {
   const url = oauth2Client.generateAuthUrl({
     // 'offline' (gets refresh_token)
@@ -38,12 +51,13 @@ const getRefreshToken = async (code) => {
   oauth2Client.setCredentials(tokens)
   return tokens.refresh_token
 }
-
+*/
 const getCalendars = async (office) => {
+  /*
   oauth2Client.setCredentials({
     refresh_token: process.env.GOOGLE_OAUTH_REFRESH_TOKEN,
   })
-
+*/
   const timeMax = new Date()
   timeMax.setDate(timeMax.getDate() + 1)
   timeMax.setHours(0, 0, 0, 0)
@@ -144,4 +158,4 @@ const getRoomsInfoRaw = async (office) => {
   return resultMap
 }
 
-module.exports = {authorize, getRefreshToken, getRoomsInfoRaw}
+module.exports = {getRoomsInfoRaw}
