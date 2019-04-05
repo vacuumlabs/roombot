@@ -6,17 +6,16 @@ const getDurationString = (from, to) => {
   const eventEnds = DateTime.fromMillis(to)
   const now = DateTime.fromMillis(from)
   const availableIn = eventEnds.diff(now, ['hours', 'minutes']).toObject()
-  const hString = Math.abs(availableIn.hours) > 0 ? `${Math.abs(availableIn.hours)}h` : undefined
+  const hString = Math.abs(availableIn.hours) > 0 ? `${Math.abs(availableIn.hours)}h` : ''
   const mString = `${Math.floor(Math.abs(availableIn.minutes))}m`
 
-  return `${hString || ''} ${mString || ''}`
+  return `${hString} ${mString}`
 }
 
 const getAttachmentFields = (roomInfo) => {
   const fields = []
 
   if (roomInfo.eventEnds) {
-
     fields.push({
       title: 'Event ends',
       value: DateTime.fromMillis(roomInfo.eventEnds)
@@ -26,15 +25,15 @@ const getAttachmentFields = (roomInfo) => {
     })
   }
 
-  if (roomInfo.nextEventStarts) {
-    fields.push({
-      title: 'Next event',
-      value: DateTime.fromMillis(roomInfo.nextEventStarts)
+  fields.push({
+    title: 'Next event',
+    value: roomInfo.nextEventStarts
+      ? DateTime.fromMillis(roomInfo.nextEventStarts)
         .setZone(roomInfo.timeZone)
-        .toLocaleString(DateTime.TIME_24_SIMPLE),
-      short: true,
-    })
-  }
+        .toLocaleString(DateTime.TIME_24_SIMPLE)
+      : 'No events today',
+    short: true,
+  })
 
   return fields
 }
@@ -54,10 +53,10 @@ const getFormatedAttachement = (roomInfo) => {
     title: roomInfo.roomName,
     text: roomInfo.available
       ? `Available${availableFor || ''}`
-      : `Unavailable    available in ${getDurationString(
+      : `Unavailable  _available in ${getDurationString(
         roomInfo.currentTimestamp,
         roomInfo.eventEnds,
-      )}`,
+      )}_`,
     fields: getAttachmentFields(roomInfo),
   }
 }
@@ -74,8 +73,7 @@ const printRoomsInfo = async (office) => {
     : Object.keys(roomsInfo).map((key) => getFormatedAttachement(roomsInfo[key]))
 
   const formatedOutput = {
-    type: 'section',
-    text: 'The rooms availability info: ',
+    text: 'The rooms availability info:\n<https://calendar.google.com/calendar/r|Book a room>',
     attachments,
   }
 
