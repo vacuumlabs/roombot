@@ -10,6 +10,7 @@
       ],
     "env": {
         "SLACK_SIGNING_SECRET": "@roombot-slack-signing-secret",
+        "GOOGLE_PRIVATE_KEY_JSON": "@roombot-google-private-key-json",
         "PORT": "3000"
     }
 }

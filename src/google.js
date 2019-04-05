@@ -1,6 +1,6 @@
 const {google} = require('googleapis')
 const {CALENDARS} = require('./constants')
-const privatekey = require('../private_key.json')
+const privatekey = JSON.parse(Buffer.from(process.env.GOOGLE_PRIVATE_KEY_JSON, 'base64').toString())
 
 
 const scopes = [
