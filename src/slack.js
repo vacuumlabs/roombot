@@ -12,26 +12,36 @@ const getDurationString = (from, to) => {
   return `${hString} ${mString}`
 }
 
+const isToday = (currentTimestamp, end) => {
+  const eventEnds = DateTime.fromMillis(end)
+  const endOfDay = DateTime.fromMillis(currentTimestamp).endOf('day')
+
+  return eventEnds < endOfDay
+}
+
 const getAttachmentFields = (roomInfo) => {
   const fields = []
 
   if (roomInfo.eventEnds) {
+    const eventEnds = DateTime.fromMillis(roomInfo.eventEnds).setZone(roomInfo.timeZone)
+    const endDateString = isToday(roomInfo.currentTimestamp, roomInfo.eventEnds)
+      ? ''
+      : `${eventEnds.toLocaleString(DateTime.DATE_MED)} `
+
     fields.push({
       title: 'Event ends',
-      value: DateTime.fromMillis(roomInfo.eventEnds)
-        .setZone(roomInfo.timeZone)
-        .toLocaleString(DateTime.TIME_24_SIMPLE),
+      value: `${endDateString}${eventEnds.toLocaleString(DateTime.TIME_24_SIMPLE)}`,
       short: true,
     })
   }
 
   fields.push({
     title: 'Next event',
-    value: roomInfo.nextEventStarts
+    value: (roomInfo.nextEventStarts)
       ? DateTime.fromMillis(roomInfo.nextEventStarts)
         .setZone(roomInfo.timeZone)
         .toLocaleString(DateTime.TIME_24_SIMPLE)
-      : 'No events today',
+      : `No ${roomInfo.eventEnds ? 'other ' : ''}events today`,
     short: true,
   })
 
@@ -41,10 +51,10 @@ const getAttachmentFields = (roomInfo) => {
 const getFormatedAttachement = (roomInfo) => {
 
   const availableFor = roomInfo.nextEventStarts
-    ? ` for ${getDurationString(
+    ? ` _for ${getDurationString(
       roomInfo.nextEventStarts,
       roomInfo.currentTimestamp,
-    )}`
+    )}_`
     : undefined
 
   return {
@@ -73,7 +83,7 @@ const printRoomsInfo = async (office) => {
     : Object.keys(roomsInfo).map((key) => getFormatedAttachement(roomsInfo[key]))
 
   const formatedOutput = {
-    text: 'The rooms availability info:\n<https://calendar.google.com/calendar/r|Book a room>',
+    text: `Rooms availability info for office: ${office}\n<https://calendar.google.com/calendar/r|Book a room>`,
     attachments,
   }
 

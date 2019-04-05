@@ -1,7 +1,7 @@
 {
     "version": 2,
     "name": "roombot",
-    "alias": "roombot-vacuumlabs.now.sh",
+    "alias": "room.vacuumlabs.com",
     "builds": [
         { "src": "app.js", "use": "@now/node" }
     ],
@@ -9,7 +9,7 @@
         { "src": "/(.*)", "dest": "app.js" }
       ],
     "env": {
-        "SLACK_SIGNING_SECRET": "@slack-signing-secret",
+        "SLACK_SIGNING_SECRET": "@roombot-slack-signing-secret",
         "PORT": "3000"
     }
 }
