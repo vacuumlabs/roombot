@@ -3,11 +3,8 @@
     "name": "roombot",
     "alias": "room.vacuumlabs.com",
     "builds": [
-        { "src": "app.js", "use": "@now/node" }
+        { "src": "index.js", "use": "@now/node-server" }
     ],
-    "routes": [
-        { "src": "/(.*)", "dest": "app.js" }
-      ],
     "env": {
         "SLACK_SIGNING_SECRET": "@roombot-slack-signing-secret",
         "GOOGLE_PRIVATE_KEY_JSON": "@roombot-google-private-key-json",
