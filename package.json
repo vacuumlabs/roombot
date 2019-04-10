@@ -10,6 +10,7 @@
   "author": "Filip Konig",
   "license": "ISC",
   "dependencies": {
+    "axios": "^0.18.0",
     "cookie-parser": "~1.4.3",
     "dotenv": "^7.0.0",
     "express": "~4.16.0",
