@@ -48,7 +48,53 @@ const getAttachmentFields = (roomInfo) => {
   return fields
 }
 
+const getSuffix = (floor) => {
+  const suffixes = {
+    1: 'st',
+    2: 'nd',
+    3: 'rd',
+  }
+  return suffixes[parseInt(floor, 10)] || 'th'
+}
+
+const parseRoomName = (serializedRoomName, withDevices) => {
+  const s = serializedRoomName.substring(3)
+  const [office, floor, s1] = s.split('-')
+  const [name, s2] = s1.split('(')
+  const [persons, s3] = s2.split(')')
+
+  let infoString
+  if (withDevices) {
+    const devices = s3.replace('[', '').replace(']', '').toLowerCase()
+    infoString = `_${office.trim()}, ${floor.trim()}${getSuffix(floor.trim())} floor, ${persons.trim()} persons, with: ${devices.trim()}_\n`
+  } else {
+    infoString = `_${office.trim()}, ${floor.trim()}${getSuffix(floor.trim())} floor, ${persons.trim()} persons_\n`
+  }
+
+  return {
+    name: name.trim(),
+    info: infoString,
+  }
+}
+
+const getRoomNameAndInfo = (roomName) => {
+  const withDevicesRegex = RegExp('HQ\\s[A-Z]+-\\d+-[A-Za-z\\s\']+\\(\\d+\\)\\s\\[[A-Za-z\\s,]+\\]')
+  const withoutDevicesRegex = RegExp('HQ\\s[A-Z]+-\\d+-[A-Za-z\\s\']+\\(\\d+\\)')
+  if (withDevicesRegex.test(roomName)) {
+    return parseRoomName(roomName, true)
+  } else if (withoutDevicesRegex.test(roomName)) {
+    return parseRoomName(roomName, false)
+  } else {
+    return {
+      name: roomName,
+      info: '',
+    }
+  }
+}
+
 const getFormatedAttachement = (roomInfo) => {
+
+  const roomNameAndInfo = getRoomNameAndInfo(roomInfo.roomName)
 
   const availableFor = roomInfo.nextEventStarts
     ? ` _for ${getDurationString(
@@ -57,16 +103,18 @@ const getFormatedAttachement = (roomInfo) => {
     )}_`
     : undefined
 
+  const availabilityText = roomInfo.available
+    ? `Available${availableFor || ''}`
+    : `Unavailable - _available in ${getDurationString(
+      roomInfo.currentTimestamp,
+      roomInfo.eventEnds,
+    )}_`
+
   return {
     fallback: roomInfo.roomName,
     color: roomInfo.available ? 'good' : 'danger',
-    title: roomInfo.roomName,
-    text: roomInfo.available
-      ? `Available${availableFor || ''}`
-      : `Unavailable  _available in ${getDurationString(
-        roomInfo.currentTimestamp,
-        roomInfo.eventEnds,
-      )}_`,
+    title: roomNameAndInfo.name,
+    text: `${roomNameAndInfo.info}${availabilityText}`,
     fields: getAttachmentFields(roomInfo),
   }
 }
