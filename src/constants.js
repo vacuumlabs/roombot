@@ -22,6 +22,9 @@ const constants = {
       CRYPTO: {
         googleId: 'vacuumlabs.com_37393339303938363436@resource.calendar.google.com',
       },
+      MATEJ_OFFICE: {
+        googleId: 'vacuumlabs.com_18861f5ujbefijbag9a2n05i92jlc6gb64oj2d9i6gpjcc9n6k@resource.calendar.google.com',
+      },
     },
   },
 }
