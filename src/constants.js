@@ -25,6 +25,9 @@ const constants = {
       MATEJ_OFFICE: {
         googleId: 'vacuumlabs.com_18861f5ujbefijbag9a2n05i92jlc6gb64oj2d9i6gpjcc9n6k@resource.calendar.google.com',
       },
+      LEGO: {
+        googleId: 'vacuumlabs.com_188f9nocu2mo0gigktdlqrfams9su6gb6gp36cpk6cpjechn64@resource.calendar.google.com',
+      },
     },
   },
 }
