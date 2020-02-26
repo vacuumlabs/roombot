@@ -1,6 +1,6 @@
 const crypto = require('crypto')
 const qs = require('qs')
-const {SLACK_SIGNING_SECRET} = process.env
+const {slackSecret} = require('../config');
 
 function authenticateRequest(req, res, next) {
   const timestamp = req.headers['x-slack-request-timestamp']
@@ -18,12 +18,12 @@ function authenticateRequest(req, res, next) {
     res.status(400).send({error: 'Invalid request'})
   }
 
-  if (!SLACK_SIGNING_SECRET) {
+  if (!slackSecret) {
     res.status(400).send({error: 'Slack signing secret is empty'})
   }
 
   const mySignature = `v0=${
-    crypto.createHmac('sha256', SLACK_SIGNING_SECRET)
+    crypto.createHmac('sha256', slackSecret)
       .update(sigBasestring, 'utf8')
       .digest('hex')}`
 

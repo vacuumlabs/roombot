@@ -1,6 +1,7 @@
 const {google} = require('googleapis')
 const {CALENDARS} = require('./constants')
-const privatekey = JSON.parse(Buffer.from(process.env.GOOGLE_PRIVATE_KEY_JSON, 'base64').toString())
+const {googlePrivateKey} = require('../config')
+const privatekey = JSON.parse(Buffer.from(googlePrivateKey, 'base64').toString())
 
 
 const scopes = [
@@ -32,18 +33,22 @@ const getCalendars = async (office) => {
 
   const calendars = {}
   for (const key in CALENDARS[office]) {
-    const res = await calendar.events.list({
-      calendarId: CALENDARS[office][key].googleId,
-      alwaysIncludeEmail: false,
-      maxAttendees: 1,
-      maxResults: 2,
-      orderBy: 'startTime',
-      singleEvents: true,
-      timeMax: timeMax.toISOString(),
-      timeMin: timeMin.toISOString(),
-      fields: 'timeZone , summary, items',
-    })
-    calendars[key] = res.data
+    try {
+      const res = await calendar.events.list({
+        calendarId: CALENDARS[office][key].googleId,
+        alwaysIncludeEmail: false,
+        maxAttendees: 1,
+        maxResults: 2,
+        orderBy: 'startTime',
+        singleEvents: true,
+        timeMax: timeMax.toISOString(),
+        timeMin: timeMin.toISOString(),
+        fields: 'timeZone , summary, items',
+      })
+      calendars[key] = res.data
+    } catch (e) {
+      console.log(`Problem with loading ${key} room!`)
+    }
   }
 
   return calendars
