@@ -1,6 +1,6 @@
 const crypto = require('crypto')
 const qs = require('qs')
-const {slackSecret} = require('../config');
+const {slackSecret} = require('../config')
 
 function authenticateRequest(req, res, next) {
   const timestamp = req.headers['x-slack-request-timestamp']
