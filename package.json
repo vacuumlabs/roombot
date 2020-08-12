@@ -27,7 +27,7 @@
     "eslint-config-vacuumlabs": "^1.8.2",
     "eslint-plugin-import": "^2.18.2",
     "eslint-plugin-react": "^7.14.3",
-    "nodemon": "^1.19.2"
+    "nodemon": "^2.0.4"
   },
   "engines": {
     "node": "14.5.0"
